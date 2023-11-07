@@ -28,9 +28,17 @@ public class App {
                 actionWrite();
             } else if (cmd.equals("목록")) {
                 actionList();
-
+            } else if (cmd.startsWith("삭제")) {
+                actionRemove(cmd);
             }
         }
+    }
+
+    void actionRemove(String cmd) {
+        String idStr = cmd.replace("삭제?id=", "");
+        int id = Integer.parseInt(idStr);
+
+        System.out.printf("%d번 명언을 삭제합니다.\n", id);
     }
 
     void actionList() {
