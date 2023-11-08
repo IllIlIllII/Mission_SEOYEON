@@ -23,20 +23,24 @@ public class App {
             String cmd = scanner.nextLine();
             Rq rq = new Rq(cmd);
 
-            if (cmd.equals("종료")) {
-                break;
-            } else if (cmd.equals("등록")) {
-                actionWrite();
-            } else if (cmd.equals("목록")) {
-                actionList();
-            } else if (cmd.startsWith("삭제")) {
-                actionRemove(cmd);
+            switch (rq.getAction()) {
+                case "종료":
+                    return;
+                case "등록":
+                    actionWrite();
+                    break;
+                case "목록":
+                    actionList();
+                    break;
+                case "삭제":
+                    actionRemove(rq);
+                    break;
             }
         }
     }
 
-    void actionRemove(String cmd) {
-        int id = getParamAsInt(cmd, "id", 0);
+    void actionRemove(Rq rq) {
+        int id = rq.getParamAsInt("id", 0);
 
         if (id == 0) {
             System.out.println("id를 정확히 입력해주세요.");   // 존재하지 않는 명언 삭제에 대한 예외
@@ -44,31 +48,6 @@ public class App {
         }
 
         System.out.printf("%d번 명언을 삭제합니다.\n", id);
-    }
-
-    int getParamAsInt(String cmd, String paramName, int defaultValue) {
-        String[] cmdBits = cmd.split("\\?", 2);
-        String quertString = cmdBits[1];
-
-        String[] queryStringBits = quertString.split("&");
-
-        for (int i = 0; i < queryStringBits.length; i++) {
-            String queryParam = queryStringBits[i];
-
-            String[] queryParamBits = queryParam.split("=", 2);
-
-            String _paramName = queryParamBits[0];
-            String paramValue = queryParamBits[1];
-
-            if (_paramName.equals(paramName)) {
-                try {
-                    return Integer.parseInt(paramValue);
-                } catch (NumberFormatException e) {
-                    return defaultValue;
-                }
-            }
-        }
-        return defaultValue;
     }
 
     void actionList() {
