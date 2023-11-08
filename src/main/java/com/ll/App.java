@@ -35,8 +35,21 @@ public class App {
                 case "삭제":
                     actionRemove(rq);
                     break;
+                case "수정":
+                    actionModify(rq);
             }
         }
+    }
+
+    void actionModify(Rq rq) {
+        int id = rq.getParamAsInt("id", 0);
+
+        if (id == 0) {
+            System.out.println("id를 정확히 입력해주세요.");   // 존재하지 않는 명언 삭제에 대한 예외
+            return;
+        }
+
+        System.out.printf("%d번 명언은 수정되었습니다.\n", id);
     }
 
     void actionRemove(Rq rq) {
@@ -55,7 +68,7 @@ public class App {
         }
 
         quotations.remove(index);
-        System.out.printf("%d번 명언을 삭제되었습니다.\n", id);
+        System.out.printf("%d번 명언은 삭제되었습니다.\n", id);
     }
     int getIndexOfQuotationId(int id) {
         for (int i = 0; i < quotations.size(); i++) {
