@@ -21,6 +21,7 @@ public class App {
         while (true) {
             System.out.print("명령) ");
             String cmd = scanner.nextLine();
+            Rq rq = new Rq(cmd);
 
             if (cmd.equals("종료")) {
                 break;
@@ -38,7 +39,7 @@ public class App {
         int id = getParamAsInt(cmd, "id", 0);
 
         if (id == 0) {
-            System.out.println("id를 정확히 입력해주세요.");
+            System.out.println("id를 정확히 입력해주세요.");   // 존재하지 않는 명언 삭제에 대한 예외
             return;
         }
 
